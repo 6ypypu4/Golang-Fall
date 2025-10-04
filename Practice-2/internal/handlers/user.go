@@ -10,6 +10,7 @@ import (
 
 func UserHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	Init()
 
 	switch r.Method {
 	case http.MethodGet:
@@ -31,9 +32,19 @@ func handleGetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	//тут нужно добавить подтягивание из /data/users.json
-	json.NewEncoder(w).Encode(map[string]int{"user_id": int(id)})
+	for _, user := range users {
+		if user.Id == int(id) {
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(map[string]interface{}{
+				"user_id":   user.Id,
+				"user_name": user.Name,
+			})
+			return
+		}
+	}
+
+	w.WriteHeader(http.StatusNotFound)
+	json.NewEncoder(w).Encode(map[string]string{"error": "user not found"})
 }
 
 // POST /user
@@ -50,7 +61,6 @@ func handlePostUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	//тут нужно добавить подтягивание в /data/users.json через try
 
 	json.NewEncoder(w).Encode(map[string]string{"created": data.Name})
 }
@@ -88,5 +98,5 @@ func saveData(dataPath string) {
 	f.Close()
 }
 func Init() {
-	loadData(os.Args[1])
+	loadData(path)
 }

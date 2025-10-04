@@ -8,11 +8,8 @@ import (
 )
 
 func main() {
-
 	router := http.NewServeMux()
 	router.Handle("/user", middleware.Auth(http.HandlerFunc(handlers.UserHandler)))
-
-	handlers.Init()
 
 	log.Println("Server running on localhost:8080")
 	err := http.ListenAndServe(":8080", router)
