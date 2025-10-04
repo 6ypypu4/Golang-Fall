@@ -54,8 +54,9 @@ func handlePostUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&data)
-	if err != nil || data.Name == "" {
+	if err != nil /* || data.Name == ""*/ {
 		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
 		json.NewEncoder(w).Encode(map[string]string{"error": "invalid name"})
 		return
 	}
