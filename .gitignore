@@ -23,3 +23,12 @@ go.work.sum
 
 # env file
 .env
+
+
+# IDE files
+.idea/
+
+# Docker / Postgres data
+Practice-4/data/
+
+
