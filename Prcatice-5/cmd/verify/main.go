@@ -13,4 +13,6 @@ func main() {
 	}
 	defer db.Close()
 
+	GetAllProducts(db)
+	//FilterByCategory(db, "Electric")
 }

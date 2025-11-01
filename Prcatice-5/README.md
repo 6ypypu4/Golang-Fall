@@ -10,17 +10,22 @@ docker ps
 
 ## 2️ Применение миграций
 ```bash
-migrate -path ./internal/db/migrations -database "postgres://postgres:postgres@localhost:5432/usersdb?sslmode=disable" up
-docker exec -it go_postgres psql -U postgres -d usersdb -c "\dt"
+migrate -path ./internal/db/migrations -database "postgres://postgres:postgres@localhost:5555/usersdb?sslmode=disable" up
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "\dt"
 ```
 
 ---
 
-## 3️ Добавление пользователей
+## 3️ Добавление данных
 ```bash
-docker exec -it go_postgres psql -U postgres -d usersdb -c "INSERT INTO users (name, email, balance) VALUES ('Ilya', 'gegedii@example.com', 5000);"
-docker exec -it go_postgres psql -U postgres -d usersdb -c "INSERT INTO users (name, email, balance) VALUES ('Denis', 'Petrov@example.com', 8000);"
-docker exec -it go_postgres psql -U postgres -d usersdb -c "SELECT * FROM users;"
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO categories (name) VALUES ('Electronics');"
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO categories (name) VALUES ('Books');"
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO categories (name) VALUES ('Clothes');"
+
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO products (name, category_id, price) VALUES ('Smartphone', 1, 150000);"
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO products (name, category_id, price) VALUES ('Laptop', 1, 350000);"
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO products (name, category_id, price) VALUES ('Novel', 2, 4000);"
+docker exec -it go_postgres2 psql -U postgres -d usersdb -c "INSERT INTO products (name, category_id, price) VALUES ('T-Shirt', 3, 8000);"
 ```
 
 ---
