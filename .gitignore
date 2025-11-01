@@ -30,5 +30,6 @@ go.work.sum
 
 # Docker / Postgres data
 Practice-4/data/
+Practice-5/data/
 
 
