@@ -1,4 +1,4 @@
-module practice4-sqlx
+module practice5-sqlx
 
 go 1.25.1
 
